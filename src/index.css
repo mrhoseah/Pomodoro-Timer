@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .btn {
+        @apply px-3 py-2 rounded-sm
+    }
+
+    .btn-success {
+        @apply bg-green-600 hover:bg-green-700 text-sm font-bold text-white
+    }
+
+    .btn-primary {
+        @apply bg-blue-600 hover:bg-blue-700 text-sm font-bold text-white
+    }
+
+    .btn-warning {
+        @apply bg-orange-600 hover:bg-orange-700 text-sm font-bold text-white
+    }
+
+    .btn-danger {
+        @apply bg-red-600 hover:bg-red-700 text-sm font-bold text-white
+    }
+}
