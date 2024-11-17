@@ -24,7 +24,7 @@ Routing: Implemented with React Router for smooth navigation between Timer, Sett
 ## Installation and Usage
 Clone the Repository:
 
-```js
+```bash
 git clone https://github.com/yourusername/pomodoro-timer.git
 ```
 cd pomodoro-timer-ap
