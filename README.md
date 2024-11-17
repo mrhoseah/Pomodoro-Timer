@@ -1,50 +1,45 @@
-# React + TypeScript + Vite
+# Pomodoro Timer App
+The Pomodoro Timer App is a productivity tool built with React and TypeScript. It helps users manage their time effectively using the Pomodoro Technique, which breaks work into intervals, traditionally 25 minutes in length, separated by short breaks. This app features a user-friendly interface with a circular progress bar and adjustable settings to customize work and break durations.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+##Features
+Intuitive Timer Interface: Displays a countdown timer with a circular progress bar.
+Adjustable Intervals: Users can set custom durations for work and break periods.
+Real-Time Updates: State management with local storage to preserve settings and timer state across sessions.
+Visual Feedback: The progress bar provides an at-a-glance understanding of the remaining time.
+Sound Alerts: Audible notifications indicate the end of work and break intervals.
+Analytics: Track completed sessions, total focus time, and break time.
+Responsive Design: Optimized for both desktop and mobile devices.
+Settings Modal: A modal window for easy adjustment of timer settings.
+Routing: Implemented with React Router for smooth navigation between Timer, Settings, and Analytics views.
 
-Currently, two official plugins are available:
+## Technologies Used
+- React: A JavaScript library for building user interfaces.
+- TypeScript: A strongly typed programming language that builds on JavaScript.
+- Tailwind CSS: A utility-first CSS framework for styling.
+-FontAwesome: Icon library for adding visual elements.
+-Shadcn UI: A library for implementing dialogs and other UI components.
+-React Router: For managing application routes.
+-Local Storage: To persist user settings and timer state.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Installation and Usage
+Clone the Repository:
 
 ```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+git clone https://github.com/yourusername/pomodoro-timer.git
 ```
+cd pomodoro-timer-ap
+Install Dependencies:
+```js
+npm install
+```
+Run the Application:
+
+```js
+npm run dev
+```
+Build for Production:
+```js
+npm run build
+```
+## Screenshots
+Include some screenshots of your application here to showcase the interface and features.
