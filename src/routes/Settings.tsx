@@ -1,30 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { Input } from '@/components/ui/input';
 
-interface SettingsProps {
-  setWorkTime: (time: number) => void;
-  setBreakTime: (time: number) => void;
-}
-
-const Settings: React.FC<SettingsProps> = ({ setWorkTime, setBreakTime }) => {
-  const [workMinutes, setWorkMinutes] = useState<number>(25);
-  const [breakMinutes, setBreakMinutes] = useState<number>(5);
+const Settings: React.FC = () => {
+  const [workMinutes, setWorkMinutes] = useLocalStorage<number>('workMinutes', 25);
+  const [breakMinutes, setBreakMinutes] = useLocalStorage<number>('breakMinutes', 5);
 
   const handleSave = () => {
-    setWorkTime(workMinutes * 60);
-    setBreakTime(breakMinutes * 60);
+    setWorkMinutes(workMinutes);
+    setBreakMinutes(breakMinutes);
   };
 
+  useEffect(() => {
+    document.title = `${workMinutes} minutes work, ${breakMinutes} minutes break`;
+  }, [workMinutes, breakMinutes]);
+
   return (
-    <div>
-      <label>
-        Work Minutes:
-        <input type="number" value={workMinutes} onChange={(e) => setWorkMinutes(Number(e.target.value))} />
-      </label>
-      <label>
-        Break Minutes:
-        <input type="number" value={breakMinutes} onChange={(e) => setBreakMinutes(Number(e.target.value))} />
-      </label>
-      <button onClick={handleSave}>Save</button>
+    <div className="p-4">
+      <h2 className="text-2xl font-bold mb-4">Settings</h2>
+      <div className="mb-4">
+        <label className="block mb-2">Work Minutes:</label>
+        <Input
+          type="number"
+          value={workMinutes}
+          onChange={(e) => setWorkMinutes(Number(e.target.value))}
+          className="w-full p-2 border rounded"
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block mb-2">Break Minutes:</label>
+        <Input
+          type="number"
+          value={breakMinutes}
+          onChange={(e) => setBreakMinutes(Number(e.target.value))}
+          className="w-full p-2 border rounded"
+        />
+      </div>
+      <button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">
+        Save
+      </button>
     </div>
   );
 };
