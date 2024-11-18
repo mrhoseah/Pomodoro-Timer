@@ -33,7 +33,7 @@ const Timer: React.FC = () => {
     let interval: NodeJS.Timeout | null = null;
     if (isActive && !isPaused) {
       interval = setInterval(() => {
-        setSeconds((prevSeconds: number) => prevSeconds - 1);
+        setSeconds((prevSeconds) => prevSeconds - 1);
         if (!isBreak) dispatch(incrementFocusTime(1 / 60));
         else dispatch(incrementBreakTime(1 / 60));
       }, 1000);
