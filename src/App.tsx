@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Analytics from "./routes/analytics";
 import Timer from "./components/Timer";
-import Settings from "./routes/settings";
+import Settings from "./routes/Settings";
 
 function App() {
   const [workTime, setWorkTime] = useState<number>(1500); // 25 minutes 

@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './routes/route.tsx';
-import Settings from './routes/settings.tsx';
+import Settings from './routes/Settings.tsx';
 import Analytics from './routes/analytics.tsx';
 
 const router = createBrowserRouter([
