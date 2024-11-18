@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import analyticsReducer from '@/features/analytics/analyticsSlice';
+import settingsReducer from '@/features/settings/settingsSlice'
 
 const store = configureStore({
     reducer: {
         analytics: analyticsReducer,
+        settings: settingsReducer,
     },
 });
 

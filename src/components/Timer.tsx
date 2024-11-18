@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
 import { incrementCompletedSessions, incrementFocusTime, incrementBreakTime, incrementIncompleteSessions } from '@/features/analytics/analyticsSlice';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import CircularProgressBar from './CircularProgressBar';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,43 +18,59 @@ import { Label } from '@/components/ui/label';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import '@/fontAwesome';
+import { setBreakMinutes, setWorkMinutes } from '@/features/settings/settingsSlice';
 
 const Timer: React.FC = () => {
-  const [seconds, setSeconds] = useLocalStorage<number>('timerSeconds', 1500); // 25 minutes
-  const [isActive, setIsActive] = useLocalStorage<boolean>('timerIsActive', false);
-  const [isPaused, setIsPaused] = useLocalStorage<boolean>('isPaused', false);
-  const [isBreak, setIsBreak] = useLocalStorage<boolean>('isBreak', false);
-  const [workMinutes, setWorkMinutes] = useLocalStorage<number>('workMinutes', 25);
-  const [breakMinutes, setBreakMinutes] = useLocalStorage<number>('breakMinutes', 5);
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const workMinutes = useSelector((state: RootState) => state.settings.workMinutes);
+  const breakMinutes = useSelector((state: RootState) => state.settings.breakMinutes);
+  const [seconds, setSeconds] = useState<number>(workMinutes * 60); 
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [isBreak, setIsBreak] = useState<boolean>(false);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setSeconds(isBreak ? breakMinutes * 60 : workMinutes * 60);
+  }, [workMinutes, breakMinutes, isBreak]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
+
+    const tick = (prevSeconds: number): number => {
+      if (prevSeconds <= 0) {
+        if (isBreak) {
+          setSeconds(workMinutes * 60); // Back to work session
+        } else {
+          setSeconds(breakMinutes * 60); // 5 minute break
+          dispatch(incrementCompletedSessions());
+        }
+        setIsBreak(!isBreak);
+
+        // Play beep sound
+        const beep = new Audio('/beep.mp3');
+        beep.play();
+        return prevSeconds; // Return the current state to prevent setting negative seconds
+      } else {
+        if (!isBreak) {
+          dispatch(incrementFocusTime(1 / 60));
+        } else {
+          dispatch(incrementBreakTime(1 / 60));
+        }
+        return prevSeconds - 1;
+      }
+    };
+
     if (isActive && !isPaused) {
       interval = setInterval(() => {
-        setSeconds(seconds - 1);
-        if (!isBreak) dispatch(incrementFocusTime(1 / 60));
-        else dispatch(incrementBreakTime(1 / 60));
+        setSeconds(tick);
       }, 1000);
     }
 
-    if (seconds === 0) {
-      if (isBreak) {
-        setSeconds(1500); // Back to work session
-      } else {
-        setSeconds(300); // 5 minute break
-        dispatch(incrementCompletedSessions());
-      }
-      setIsBreak(!isBreak);
-
-      // Play beep sound
-      const beep = new Audio('/beep.mp3');
-      beep.play();
-    }
-
-    return () => clearInterval(interval!);
-  }, [isActive, isPaused, seconds, isBreak, dispatch,setIsActive,setBreakMinutes,setIsBreak,setSeconds]);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isActive, isPaused, isBreak, dispatch, workMinutes, breakMinutes]);
 
   const formatTime = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
@@ -62,7 +78,7 @@ const Timer: React.FC = () => {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
-  const progress = (seconds / (isBreak ? 300 : 1500)) * 100;
+  const progress = (seconds / (isBreak ? breakMinutes * 60 : workMinutes * 60)) * 100;
 
   const handleStart = () => {
     setIsActive(true);
@@ -81,14 +97,12 @@ const Timer: React.FC = () => {
     if (seconds > 0 && isActive) {
       dispatch(incrementIncompleteSessions());
     }
-    setSeconds(isBreak ? 300 : 1500);
+    setSeconds(isBreak ? breakMinutes * 60 : workMinutes * 60);
     setIsActive(false);
     setIsPaused(false);
   };
 
   const handleSave = () => {
-    setWorkMinutes(workMinutes);
-    setBreakMinutes(breakMinutes);
     setIsDialogOpen(false);
   };
 
@@ -96,7 +110,7 @@ const Timer: React.FC = () => {
     <div className="flex flex-col items-center space-y-4">
       <h1 className="text-2xl font-bold mb-4 text-white">{isBreak ? 'Break Time!' : 'Work Time!'}</h1>
       <CircularProgressBar size={200} progress={progress} strokeWidth={15}>
-        <div className='font-semibold text-white'>{formatTime(seconds)}</div>
+       <div className='text-white font-semibold'> {formatTime(seconds)}</div>
       </CircularProgressBar>
       <div className="mt-4">
         {!isActive && !isPaused && (
@@ -139,7 +153,7 @@ const Timer: React.FC = () => {
               <Input
                 type="number"
                 value={workMinutes}
-                onChange={(e) => setWorkMinutes(Number(e.target.value))}
+                onChange={(e) => dispatch(setWorkMinutes(Number(e.target.value)))}
                 id="work-minutes"
                 className="col-span-3"
               />
@@ -151,7 +165,7 @@ const Timer: React.FC = () => {
               <Input
                 type="number"
                 value={breakMinutes}
-                onChange={(e) => setBreakMinutes(Number(e.target.value))}
+                onChange={(e) => dispatch(setBreakMinutes(Number(e.target.value)))}
                 id="break-minutes"
                 className="col-span-3"
               />

@@ -1,14 +1,20 @@
-import React, {useEffect } from 'react';
-import useLocalStorage from '../hooks/useLocalStorage';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
+import { setWorkMinutes, setBreakMinutes } from '@/features/settings/settingsSlice';
 import { Input } from '@/components/ui/input';
 
 const Settings: React.FC = () => {
-  const [workMinutes, setWorkMinutes] = useLocalStorage<number>('workMinutes', 25);
-  const [breakMinutes, setBreakMinutes] = useLocalStorage<number>('breakMinutes', 5);
+  const dispatch = useDispatch();
+  const workMinutes = useSelector((state: RootState) => state.settings.workMinutes);
+  const breakMinutes = useSelector((state: RootState) => state.settings.breakMinutes);
 
-  const handleSave = () => {
-    setWorkMinutes(workMinutes);
-    setBreakMinutes(breakMinutes);
+  const handleWorkMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setWorkMinutes(Number(e.target.value)));
+  };
+
+  const handleBreakMinutesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setBreakMinutes(Number(e.target.value)));
   };
 
   useEffect(() => {
@@ -23,7 +29,7 @@ const Settings: React.FC = () => {
         <Input
           type="number"
           value={workMinutes}
-          onChange={(e) => setWorkMinutes(Number(e.target.value))}
+          onChange={handleWorkMinutesChange}
           className="w-full p-2 border rounded"
         />
       </div>
@@ -32,13 +38,10 @@ const Settings: React.FC = () => {
         <Input
           type="number"
           value={breakMinutes}
-          onChange={(e) => setBreakMinutes(Number(e.target.value))}
+          onChange={handleBreakMinutesChange}
           className="w-full p-2 border rounded"
         />
       </div>
-      <button onClick={handleSave} className="px-4 py-2 bg-blue-500 text-white rounded">
-        Save
-      </button>
     </div>
   );
 };
