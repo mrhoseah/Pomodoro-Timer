@@ -1,6 +1,6 @@
 # Pomodoro Timer App
 The Pomodoro Timer App is a productivity tool built with React and TypeScript. It helps users manage their time effectively using the Pomodoro Technique, which breaks work into intervals, traditionally 25 minutes in length, separated by short breaks. This app features a user-friendly interface with a circular progress bar and adjustable settings to customize work and break durations.
-Try it now [pomodoro-timer-rt.netlify.com](https://pomodoro-timer-rt.netlify.app/)
+Try it now [pomodoro-timr.netlify.com](https://pomodoro-timr.netlify.app/)
 
 ##Features
 Intuitive Timer Interface: Displays a countdown timer with a circular progress bar.
