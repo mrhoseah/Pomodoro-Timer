@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet-async';
 import { RootState } from '@/app/store';
 import { incrementCompletedSessions, incrementFocusTime, incrementBreakTime, incrementIncompleteSessions } from '@/features/analytics/analyticsSlice';
 import CircularProgressBar from './CircularProgressBar';
@@ -108,6 +109,11 @@ const Timer: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center space-y-4">
+      <Helmet> 
+        <title>Pomodoro Timer - Work Time</title> 
+        <meta name="description" content="Manage your time effectively with our Pomodoro Timer." /> 
+        <meta name="keywords" content="Pomodoro, Timer, Productivity" />
+      </Helmet>
       <h1 className="text-2xl font-bold mb-4 text-white">{isBreak ? 'Break Time!' : 'Work Time!'}</h1>
       <CircularProgressBar size={200} progress={progress} strokeWidth={15}>
        <div className='text-white font-semibold'> {formatTime(seconds)}</div>
