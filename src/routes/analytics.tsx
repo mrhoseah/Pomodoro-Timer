@@ -1,29 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faChartLine, faChartPie } from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
 
 const Analytics: React.FC = () => {
-  const [completedSessions, setCompletedSessions] = useState<number>(0);
-  const [totalFocusTime, setTotalFocusTime] = useState<number>(0); // in minutes
-  const [breakTime, setBreakTime] = useState<number>(0); // in minutes
+  const completedSessions = useSelector((state: RootState) => state.analytics.completedSessions);
+  const totalFocusTime = useSelector((state: RootState) => state.analytics.totalFocusTime);
+  const breakTime = useSelector((state: RootState) => state.analytics.breakTime);
+  const incompleteSessions = useSelector((state: RootState) => state.analytics.incompleteSessions);
 
-  useEffect(() => {
-    // Fetch data from local storage or API
-    const completed = localStorage.getItem('completedSessions');
-    const focusTime = localStorage.getItem('totalFocusTime');
-    const breakDuration = localStorage.getItem('breakTime');
-
-    if (completed) setCompletedSessions(Number(completed));
-    if (focusTime) setTotalFocusTime(Number(focusTime));
-    if (breakDuration) setBreakTime(Number(breakDuration));
-  }, []);
-
-  useEffect(() => {
-    // Update local storage whenever the state changes
-    localStorage.setItem('completedSessions', completedSessions.toString());
-    localStorage.setItem('totalFocusTime', totalFocusTime.toString());
-    localStorage.setItem('breakTime', breakTime.toString());
-  }, [completedSessions, totalFocusTime, breakTime]);
+const performancePercentage = (completedSessions + incompleteSessions) === 0 ?
+ 0 : ((completedSessions / (completedSessions + incompleteSessions)) * 100).toFixed();
+;  // Helper function to format time in a human-readable way
 
   return (
     <div className="p-4">
@@ -34,11 +24,19 @@ const Analytics: React.FC = () => {
       </div>
       <div className="mb-4">
         <FontAwesomeIcon icon={faChartLine} size="2x" />
-        <span> Total Focus Time: {totalFocusTime} minutes</span>
+        <span> Total Focus Time: {moment(totalFocusTime).minutes()} minutes</span>
       </div>
       <div className="mb-4">
         <FontAwesomeIcon icon={faChartPie} size="2x" />
-        <span> Break Time: {breakTime} minutes</span>
+        <span> Break Time: {moment(breakTime).minutes()} minutes</span>
+      </div>
+      <div className="mb-4">
+        <FontAwesomeIcon icon={faChartBar} size="2x" />
+        <span> Incomplete Sessions: {incompleteSessions}</span>
+      </div>
+      <div className="mb-4">
+        <FontAwesomeIcon icon={faChartPie} size="2x" />
+        <span> Performance Percentage: {Number(performancePercentage)}%</span>
       </div>
     </div>
   );
