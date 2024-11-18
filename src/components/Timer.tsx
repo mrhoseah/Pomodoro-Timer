@@ -44,12 +44,12 @@ const Timer: React.FC = () => {
           setSeconds(workMinutes * 60); // Back to work session
         } else {
           setSeconds(breakMinutes * 60); // 5 minute break
-          dispatch(incrementCompletedSessions());
+          dispatch(incrementCompletedSessions(1));
         }
         setIsBreak(!isBreak);
 
         // Play beep sound
-        const beep = new Audio('/beep.mp3');
+        const beep = new Audio('/censor-beep.mp3');
         beep.play();
         return prevSeconds; // Return the current state to prevent setting negative seconds
       } else {

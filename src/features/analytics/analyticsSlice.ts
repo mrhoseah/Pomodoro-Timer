@@ -18,8 +18,8 @@ const analyticsSlice = createSlice({
     name: 'analytics',
     initialState,
     reducers: {
-        incrementCompletedSessions(state) {
-            state.completedSessions += 1;
+        incrementCompletedSessions(state, action: PayloadAction<number>) {
+            state.completedSessions += action.payload;
         },
         incrementFocusTime(state, action: PayloadAction<number>) {
             state.totalFocusTime += action.payload;
