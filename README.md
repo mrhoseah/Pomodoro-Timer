@@ -4,6 +4,8 @@ A modern, feature-rich Pomodoro timer built with React, TypeScript, and cutting-
 
 ![Pomodoro Pro](https://img.shields.io/badge/Version-2.0.0-purple) ![React](https://img.shields.io/badge/React-18.3.1-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.6.2-blue) ![PWA](https://img.shields.io/badge/PWA-Enabled-green)
 
+**Created by [@mrhoseah](https://github.com/mrhoseah)**
+
 ## ✨ Features
 
 ### 🎯 Core Timer Features
@@ -61,7 +63,7 @@ A modern, feature-rich Pomodoro timer built with React, TypeScript, and cutting-
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/pomodoro-pro.git
+   git clone https://github.com/mrhoseah/pomodoro-pro.git
    cd pomodoro-pro
    ```
 
@@ -236,9 +238,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🤝 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/pomodoro-pro/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/pomodoro-pro/discussions)
-- **Email**: support@pomodoropro.dev
+- **Issues**: [GitHub Issues](https://github.com/mrhoseah/pomodoro-pro/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/mrhoseah/pomodoro-pro/discussions)
+- **Email**: mrhoseah@example.com
 
 ## 🙏 Acknowledgments
 
@@ -247,8 +249,41 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Open source contributors
 - Design inspiration from modern productivity apps
 
+## 📸 Screenshots
+
+### Timer Interface
+- Beautiful circular progress timer with smooth animations
+- Real-time session tracking and statistics
+- Customizable work and break durations
+
+### Task Management
+- Create and organize tasks with priority levels
+- Visual progress tracking for each task
+- Set current focus task for focused work sessions
+
+### Analytics Dashboard
+- Comprehensive productivity metrics
+- Performance scoring and insights
+- Time analysis and trend tracking
+
+### Settings Panel
+- Theme switching (Light, Dark, System)
+- 5 productivity-focused color schemes
+- Notification management and preferences
+- Redux persistence with localStorage sync
+
+## 🚀 Quick Demo
+
+Try the live demo: [Pomodoro Pro Demo](https://mrhoseah.github.io/pomodoro-pro)
+
+## 📱 Mobile Support
+
+- **iOS**: Add to Home Screen via Safari
+- **Android**: Install from Chrome browser
+- **Desktop**: Install as PWA from any modern browser
+
 ---
 
-**Made with ❤️ for productivity enthusiasts**
+**Made with ❤️ by [@mrhoseah](https://github.com/mrhoseah) for productivity enthusiasts**
 
 *Transform your work habits with Pomodoro Pro - the next generation of productivity tools.*
